@@ -44,18 +44,16 @@ def read_ofb(filename, imager=False, max_seqno=6e23,sensor='cris' ):
     odb_list=odb_list_master
     if imager:
         odb_list=odb_list+odb_list_imager
-    all_main = {}
-    # Read ODB
-    for item in odb_list:
-        df = codc.read_odb(filename, single=True,columns=[item,])
 
-        # Populate dictionaries with values from ODB
-        tmp = init_all(df)
-        all_main[item] = tmp[item]
-        del tmp
-        if imager:
-            all_im=init_im(df)
-        del df
+    # Read ODB
+    df = codc.read_odb(filename, single=True,columns=odb_list)
+
+    # Populate dictionaries with values from ODB
+    all_main=init_all(df)
+    if imager:
+        all_im=init_im(df)
+
+
     # Process for all channels in OFB
     chans=np.unique(all_main['ch'])
     n_chans=len(chans)
@@ -84,7 +82,7 @@ def read_ofb(filename, imager=False, max_seqno=6e23,sensor='cris' ):
     for k in list(all_main.keys()):
         tmp = all_main[k][sort_idx].reshape(n_seqnos,n_chans)
         all_main[k] = tmp
-    idx_w_null,_ = np.where((all_main['datum_event1'] == 6) | (all_main['solar_zenith']<90.0) | (all_main['lsm']>0) )
+    idx_w_null,_ = np.where((all_main['datum_event1'] == 6) | (all_main['solar_zenith']<90.0) | (all_main['lsm']==1) )
     for k in list(all_main.keys()):
         all_main[k] = np.delete(all_main[k],idx_w_null,0)
     # Calculate background and apply bias correction to obs
@@ -186,9 +184,6 @@ if __name__ == "__main__":
                                                  np.asarray(inputOdb['bkg']),\
                                                  np.asarray(inputOdb['Height']),\
                                                 27) # 27 is CrIS
-    print(all_cloud_flags.shape)
-    for i,c in enumerate(np.unique(inputOdb['chan'][0])):
-        print(c,i,np.count_nonzero(all_cloud_flags[:,i]))
     if(a.ascii):
         print("Writing ASCII {}.txt".format(a.output))
         output_ascii(a.output+".txt",all_cloud_flags,inputOdb['Longitude'],inputOdb['Latitude'],inputOdb['counter'])
