@@ -28,7 +28,7 @@ odb_list_master=['vertco_reference_1@body','fg_depar@body','obsvalue@body',
                  'biascorr_fg@body','lat@hdr','lon@hdr','seqno@hdr','lsm@modsurf',
                  'boundary_lev@radiance','trop_lev@radiance','rank_cld@radiance_body','datum_event1@body','solar_zenith@sat']
 
-db_list_ref=['vertco_reference_1@body','lat@hdr','lon@hdr',
+odb_list_ref=['vertco_reference_1@body','lat@hdr','lon@hdr',
               'seqno@hdr','datum_event1@body']
 
 
