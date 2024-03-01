@@ -18,7 +18,7 @@ Installing it:
  cmake --install . --prefix /perm/ecmv1501/local2/
 
 4.Create sourceMe file that you'd source when you want it or contents/add these to your .bashrc if you want them automatically :
-export PYTHONPATH="${PYTHONPATH}:/perm/ecmv1501/local/:/perm/ecmv1501/local2/pycads/"
+export PYTHONPATH="${PYTHONPATH}:/perm/ecmv1501/local2/:/perm/ecmv1501/local2/pycads/"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/perm/ecmv1501/local2/pycads/"
 export PATH="${PATH}:/perm/ecmv1501/local2/pycads/bin/"
 
